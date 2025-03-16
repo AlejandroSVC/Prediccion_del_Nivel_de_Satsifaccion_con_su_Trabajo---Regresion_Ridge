@@ -146,7 +146,7 @@ visualizer.score(X_test, y_test)      # Evaluate the model on the test data
 
 visualizer.show()     # Finalize and render the figure
 
-![Prediction error plot](docs/assets/images/Prediction error_plot.png)
+![Prediction error plot](docs/assets/images/Prediction_error_plot.png)
 
 ### Residuals plots on training and testing data
 
