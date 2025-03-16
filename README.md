@@ -130,6 +130,8 @@ print("R2, R-squared:", r2)
 
 print("Explained variance:", explained_var)
 
+![Metrics](docs/assets/images/Metrics.png)
+
 ### Prediction error plot
 
 import matplotlib as plt
