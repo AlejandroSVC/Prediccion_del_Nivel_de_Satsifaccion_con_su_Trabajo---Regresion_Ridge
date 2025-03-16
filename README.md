@@ -42,6 +42,8 @@ heatmap.set_title('Correlation Heatmap', fontdict={'fontsize':12}, pad=12)
 
 plt.savefig('Correlation_matrix.png', dpi=300, bbox_inches='tight')
 
+![Correls](docs/assets/images/Correlation_matrix.png)
+
 ### Extract the features and the target
 
 X = df.drop('Satisfaction',axis=1)
@@ -144,6 +146,8 @@ visualizer.score(X_test, y_test)      # Evaluate the model on the test data
 
 visualizer.show()     # Finalize and render the figure
 
+![Prediction error plot](docs/assets/images/Prediction error_plot.png)
+
 ### Residuals plots on training and testing data
 
 from yellowbrick.regressor import ResidualsPlot
@@ -155,3 +159,6 @@ visualizer.fit(X_train, y_train)      # Fit the training data to the visualizer
 visualizer.score(X_test, y_test)      # Evaluate the model on the test data
 
 visualizer.show()                     # Finalize and render the figure
+
+![Residuals plot on training and testing data](docs/assets/images/Residuals_plot_on_training_and_testing_da.png)
+
