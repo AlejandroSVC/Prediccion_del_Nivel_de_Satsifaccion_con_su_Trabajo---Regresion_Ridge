@@ -1,4 +1,6 @@
-# Job-satisfaction---Ridge-Regression
+# Job-satisfaction
+
+## Predicting Job Satisfaction with Ridge Regression
 
 ### Set working directory and load data
 
