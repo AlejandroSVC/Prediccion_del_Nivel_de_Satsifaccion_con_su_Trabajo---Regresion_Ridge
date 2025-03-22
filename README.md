@@ -2,6 +2,8 @@
 
 ## Predicting Job Satisfaction with Ridge Regression
 
+![Job satisfaction](docs/assets/images/Banner_work.jpg)
+
 ### Set working directory and load data
 
 import os
