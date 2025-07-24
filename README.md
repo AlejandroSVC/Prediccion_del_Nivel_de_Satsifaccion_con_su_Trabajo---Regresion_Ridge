@@ -1,10 +1,10 @@
-# Job-satisfaction
+# Predecir la Satisfacción con el Trabajo
 
-## Predicting Job Satisfaction with Ridge Regression
+## Predecir la satisfacción laboral mediante Regresión Ridge
 
 ![Job satisfaction](docs/assets/images/Banner_work.jpg)
 
-### Set working directory and load data
+### Establecer el directorio de trabajo y cargar los datos
 ```
 import os
 import pandas as pd
@@ -13,7 +13,7 @@ os.chdir('C:/Users/Alejandro/Documents/')
 df = pd.read_csv('jobsat3881.csv')
 df.info()
 ```
-## Import libraries
+## Importar bibliotecas
 ```
 import numpy as np
 import seaborn as sns
@@ -24,12 +24,10 @@ from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler
 ```
-### Display correlation matrix
+### Mostrar la matriz de correlación
 
-Store heatmap object in a variable to easily access it when you want to
-include more features (such as title).
-Set the range of values to be displayed on the colormap from -1 to 1, and
-set the annotation to True to display the correlation values on the heatmap.
+Almacene el objeto HeatMap en una variable para acceder fácilmente cuando desee incluir más funciones (por ejemplo el título).
+Establezca el rango de valores que se mostrarán en el gráfico de -1 a 1, y establezca la anotación en verdadero para mostrar los valores de correlación en el mapa de calor.
 ```
 plt.figure(figsize=(16, 6))
 
@@ -41,12 +39,12 @@ plt.savefig('Correlation_matrix.png', dpi=300, bbox_inches='tight')
 ```
 ![Correls](docs/assets/images/Correlation_matrix.png)
 
-### Extract the features and the target from the database
+### Extraer la variable a predecir (target) y los predictores (features) desde la base de datos
 ```
 X = df.drop('Satisfaction',axis=1)
 y = df['Satisfaction']
 ```
-### Train-test split
+### dividir la base de datos en los subconjuntos de entrenamiento y testeo
 ```
 from sklearn.model_selection import train_test_split
 
@@ -54,49 +52,49 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30,
                                                           shuffle=False,
                                                           random_state = 1234)
 ```
-### Scale the data using StandardScaler
+### Escalar los datos usando StandardScaler
 ```
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 ```
-### Fit the Ridge regression model
+### Aplicar el modelo de Regresión Ridge
 ```
 from sklearn.linear_model import Ridge
 ```
-### Initialize the Ridge regression model with default settings
+### Inicializar el modelo de regresión Ridge con configuración predeterminada
 ```
 model = Ridge()
 ```
-### Fit the model on the training data
+### Aplicar el modelo a los datos de entrenamiento
 ```
 model.fit(X_train, y_train)
 ```
-### Choosing the Regularization Parameter λ
+### Elegir el parámetro de regularización lambda (λ)
 ```
 from sklearn.linear_model import RidgeCV
 ```
-### Set up a range of possible lambda values
+### Configurar una gama de posibles valores de lambda
 ```
 alphas = [0.1, 1.0, 10.0, 100.0]
 ```
-### Initialize the RidgeCV model to find the best lambda
+### Inicializar el modelo RidGeCV para encontrar el mejor valor para lambda
 ```
 ridge_cv_model = RidgeCV(alphas=alphas, store_cv_results=True)
 ```
-### Fit the model on the training data
+### Aplicar el modelo a los datos de entrenamiento
 ```
 ridge_cv_model.fit(X_train, y_train)
 ```
-### Print the best alpha (lambda) value
+### Mostrar el mejor valor para alfa (lambda)
 ```
 print(f"Optimal lambda: {ridge_cv_model.alpha_}")
 ```
-### Make predictions on the test set
+### Hacer predicciones para el conjunto de datos de testeo
 ```
 y_pred = model.predict(X_test)
 ```
-### Calculate evaluation metrics
+### Calcular las métricas de evaluación
 ```
 from sklearn.metrics import root_mean_squared_error
 
@@ -114,7 +112,7 @@ r2 = r2_score(y_test, y_pred)
 
 explained_var = explained_variance_score(y_test, y_pred)
 ```
-### Print the evaluation metrics
+### Mostrar las métricas de evaluación
 ```
 print("MAPE, mean absolute percentage error:", mape)
 
@@ -128,7 +126,8 @@ print("R2, R-squared:", r2)
 
 print("Explained variance:", explained_var)
 ```
-### OUTPUT
+### RESULTADOS
+
 MAPE, mean absolute percentage error: 0.3386349991569121
 
 MSE, Mean squared error 0.9269658387736589
@@ -141,7 +140,7 @@ R<sup>2</sup>, R-squared: 0.6014297918574099
 
 Explained variance: 0.6044428373606303
 
-### Prediction error plot
+### Gráfico del error de predicción
 ```
 import matplotlib as plt
 
@@ -151,25 +150,25 @@ from yellowbrick.regressor import PredictionError
 
 visualizer = PredictionError(model)
 
-visualizer.fit(X_train, y_train)      # Fit the training data to the visualizer
+visualizer.fit(X_train, y_train)      # Ajustar los datos de entrenamiento al visualizador
 
-visualizer.score(X_test, y_test)      # Evaluate the model on the test data
+visualizer.score(X_test, y_test)      # Evaluar el modelo en los datos de testeo
 
-visualizer.show()     # Finalize and render the figure
+visualizer.show()                     # Finalizar y renderizar la figura
 ```
 ![Prediction error plot](docs/assets/images/Prediction_error_plot.png)
 
-### Residuals plots on training and testing data
+### Gráficos de residuos para los datos de entrenamiento y de testeo
 ```
 from yellowbrick.regressor import ResidualsPlot
 
 visualizer = ResidualsPlot(model)
 
-visualizer.fit(X_train, y_train)      # Fit the training data to the visualizer
+visualizer.fit(X_train, y_train)      # Ajustar los datos de entrenamiento al visualizador
 
-visualizer.score(X_test, y_test)      # Evaluate the model on the test data
+visualizer.score(X_test, y_test)      # Evaluar el modelo en los datos de testeo
 
-visualizer.show()                     # Finalize and render the figure
+visualizer.show()                     # Finalizar y renderizar la figura
 ```
 ![Residuals plot on training and testing data](docs/assets/images/Residuals_plot_on_training_and_testing_da.png)
 
