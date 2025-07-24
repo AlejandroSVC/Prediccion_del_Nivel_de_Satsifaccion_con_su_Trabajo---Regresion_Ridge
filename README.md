@@ -4,7 +4,7 @@
 
 ![Job satisfaction](docs/assets/images/Banner_work.jpg)
 
-### Establecer el directorio de trabajo y cargar los datos
+### 1. Establecer el directorio de trabajo y cargar los datos
 ```
 import os
 import pandas as pd
@@ -13,7 +13,7 @@ os.chdir('C:/Users/Alejandro/Documents/')
 df = pd.read_csv('jobsat3881.csv')
 df.info()
 ```
-## Importar bibliotecas
+## 2. Importar bibliotecas
 ```
 import numpy as np
 import seaborn as sns
@@ -24,7 +24,7 @@ from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler
 ```
-### Mostrar la matriz de correlación
+### 3. Mostrar la matriz de correlación
 
 Almacene el objeto HeatMap en una variable para acceder fácilmente cuando desee incluir más funciones (por ejemplo el título).
 Establezca el rango de valores que se mostrarán en el gráfico de -1 a 1, y establezca la anotación en verdadero para mostrar los valores de correlación en el mapa de calor.
@@ -39,12 +39,12 @@ plt.savefig('Correlation_matrix.png', dpi=300, bbox_inches='tight')
 ```
 ![Correls](docs/assets/images/Correlation_matrix.png)
 
-### Extraer la variable a predecir (target) y los predictores (features) desde la base de datos
+### 4. Extraer la variable a predecir (target) y los predictores (features) desde la base de datos
 ```
 X = df.drop('Satisfaction',axis=1)
 y = df['Satisfaction']
 ```
-### dividir la base de datos en los subconjuntos de entrenamiento y testeo
+### 5. Dividir la base de datos en los subconjuntos de entrenamiento y testeo
 ```
 from sklearn.model_selection import train_test_split
 
@@ -52,49 +52,49 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30,
                                                           shuffle=False,
                                                           random_state = 1234)
 ```
-### Escalar los datos usando StandardScaler
+### 6. Escalar los datos usando StandardScaler
 ```
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 ```
-### Aplicar el modelo de Regresión Ridge
+### 7. Aplicar el modelo de Regresión Ridge
 ```
 from sklearn.linear_model import Ridge
 ```
-### Inicializar el modelo de regresión Ridge con configuración predeterminada
+### 8. Inicializar el modelo de regresión Ridge con configuración predeterminada
 ```
 model = Ridge()
 ```
-### Aplicar el modelo a los datos de entrenamiento
+### 9. Aplicar el modelo a los datos de entrenamiento
 ```
 model.fit(X_train, y_train)
 ```
-### Elegir el parámetro de regularización lambda (λ)
+### 10. Elegir el parámetro de regularización lambda (λ)
 ```
 from sklearn.linear_model import RidgeCV
 ```
-### Configurar una gama de posibles valores de lambda
+### 11. Configurar una gama de posibles valores de lambda
 ```
 alphas = [0.1, 1.0, 10.0, 100.0]
 ```
-### Inicializar el modelo RidGeCV para encontrar el mejor valor para lambda
+### 12. Inicializar el modelo RidGeCV para encontrar el mejor valor para lambda
 ```
 ridge_cv_model = RidgeCV(alphas=alphas, store_cv_results=True)
 ```
-### Aplicar el modelo a los datos de entrenamiento
+### 13. Aplicar el modelo a los datos de entrenamiento
 ```
 ridge_cv_model.fit(X_train, y_train)
 ```
-### Mostrar el mejor valor para alfa (lambda)
+### 14. Mostrar el mejor valor para alfa (lambda)
 ```
 print(f"Optimal lambda: {ridge_cv_model.alpha_}")
 ```
-### Hacer predicciones para el conjunto de datos de testeo
+### 15. Hacer predicciones para el conjunto de datos de testeo
 ```
 y_pred = model.predict(X_test)
 ```
-### Calcular las métricas de evaluación
+### 16. Calcular las métricas de evaluación
 ```
 from sklearn.metrics import root_mean_squared_error
 
@@ -112,7 +112,7 @@ r2 = r2_score(y_test, y_pred)
 
 explained_var = explained_variance_score(y_test, y_pred)
 ```
-### Mostrar las métricas de evaluación
+### 17. Mostrar las métricas de evaluación
 ```
 print("MAPE, mean absolute percentage error:", mape)
 
